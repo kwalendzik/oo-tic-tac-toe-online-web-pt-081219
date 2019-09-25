@@ -38,6 +38,14 @@ class TicTacToe
     @board[index] == " "
   end
   
+  def turn_count
+   @board.count{|token| token == "X" || token == "O"}
+  end
+ 
+  def current_player
+   turn_count % 2 == 0 ? "X" : "O"
+  end
+  
   def turn
      puts "Please enter a number (1-9)" 
      puts "Please enter a number (1-9):"	
@@ -51,14 +59,6 @@ class TicTacToe
     end	
     display_board
   end  
-  
-  def turn_count
-   @board.count{|token| token == "X" || token == "O"}
-  end
- 
-  def current_player
-   turn_count % 2 == 0 ? "X" : "O"
-  end
   
   def won?	
     WIN_COMBINATIONS.any? do |combo|	
