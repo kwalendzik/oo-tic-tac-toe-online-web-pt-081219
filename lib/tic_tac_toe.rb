@@ -38,17 +38,18 @@ class TicTacToe
     @board[index] == " "
   end
   
-    def turn
-    puts "Please choose a number between 1-9"
-    name = gets.chomp
-    index_value = input_to_index(name)
-    player = current_player
-    if valid_move?(index_value)
-      move(index_value, player)
-      display_board
-    else
-      turn
-    end
+  def turn
+     puts "Please enter a number (1-9)" 
+     puts "Please enter a number (1-9):"	
+     user_input = gets.strip	
+     index = input_to_index(user_input)	
+     if valid_move?(index)	
+      token = current_player	
+      move(index, token)	
+    else	
+      turn	
+    end	
+    display_board
   end 
   
   def turn_count
