@@ -65,32 +65,29 @@ class TicTacToe
         return combo	
       end	
     end	
+  end	
+  
+  def full?	
+    @board.all?{|square| square != " " }	
   end
   
-  def full?(board)
-   board.all? {|i| i == "X" || i == "O"}
+  def draw?
+    full? && !won?
+  end  
+  
+  def over?	
+    won? || draw?	
+  end
+
+   def winner	
+    if combo = won?	
+      @board[combo[0]]	
+    end	
   end
   
-  def draw?(board)
-   if !won?(board) && full?(board)
-     return true
-   elsif !won?(board) && !full?(board)
-     return false
-   else won?(board)
-     return false
-   end
-  end
-  
-  def over?(board)
-   if draw?(board) || won?(board) || full?(board)
-     return true
-   end
-  end
-  
-  def winner(board)
-   if won?(board)
-      return board[won?(board)[0]]
-   end
+  def play	
+    turn until over?	
+    puts winner ? "Congratulations #{winner}!" : "Cat's Game!"	
   end
   
 end
