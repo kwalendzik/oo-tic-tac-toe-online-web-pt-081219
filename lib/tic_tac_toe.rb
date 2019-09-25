@@ -10,47 +10,35 @@ class TicTacToe
    [6,4,2]
    ]
    
- def initialize(board = nil)
-   @board = board || Array.new(9, " ")
- end
-
  def display_board
-   puts " #{@board[0]} | #{@board[1]} | #{@board[2]} "
-   puts "-----------"
-   puts " #{@board[3]} | #{@board[4]} | #{@board[5]} "
-   puts "-----------"
-   puts " #{@board[6]} | #{@board[7]} | #{@board[8]} "
-  end
-
-  def input_to_index(input)
-   user_input = input.to_i - 1
+    puts " #{@board[0]} | #{@board[1]} | #{@board[2]} "	
+    puts "-----------"	
+    puts " #{@board[3]} | #{@board[4]} | #{@board[5]} "	
+    puts "-----------"	
+    puts " #{@board[6]} | #{@board[7]} | #{@board[8]} "	
+  end  
+  
+  def input_to_index(user_input)
+    user_input.to_i - 1
+  end  
+    
+  def move(index, token)	
+    @board[index] = token	
+  end 
+  
+  def position_taken?(index)	
+    @board[index] != " "	
   end
   
-  def move(index, token = "X")
-     @board[index] = token
-  end
-  
-  def position_taken?(index)
-    @board[index] == "X" || @board[index] == "O"
-  end
-  
-  def valid_move?(index)
-    @board[index] == " "
-  end
-  
-  def turn_count
-   @board.count{|token| token == "X" || token == "O"}
-  end
- 
-  def current_player
-   turn_count % 2 == 0 ? "X" : "O"
+  def valid_move?(index)	
+    !position_taken?(index) && index.between?(0,8)	
   end
   
   def turn
      puts "Please enter a number (1-9)" 
      puts "Please enter a number (1-9):"	
      user_input = gets.strip	
-     index = input_to_index(input)	
+     index = input_to_index(user_input)	
      if valid_move?(index)	
       token = current_player	
       move(index, token)	
@@ -59,6 +47,16 @@ class TicTacToe
     end	
     display_board
   end  
+  
+  def turn_count
+    @board.count{|square| square != " " }
+  end  
+    
+    
+  def current_player
+    turn_count.even? ? "X" : "O"
+    
+  end
   
   def won?	
     WIN_COMBINATIONS.any? do |combo|	
@@ -71,6 +69,7 @@ class TicTacToe
   def full?	
     @board.all?{|square| square != " " }	
   end
+  
   
   def draw?
     full? && !won?
@@ -89,6 +88,8 @@ class TicTacToe
   def play	
     turn until over?	
     puts winner ? "Congratulations #{winner}!" : "Cat's Game!"	
-  end
+  end	
+
+end 
+
   
-end
